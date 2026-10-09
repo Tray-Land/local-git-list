@@ -29,7 +29,20 @@ Requirements: macOS 14 or later and Xcode 16 or later (Swift 6).
 ```sh
 ./build.sh            # builds "build/Local Git List.app" (universal, ad-hoc signed)
 ./build.sh --install  # also copies it to /Applications and launches it
+./build.sh --dmg      # also builds build/LocalGitList.dmg
 swift test            # core logic tests
+```
+
+### Distributing
+
+Without a certificate the dmg is ad-hoc signed. Users have to approve it once: try to open the app, then System Settings > Privacy & Security > Open Anyway (or `xattr -dr com.apple.quarantine "/Applications/Local Git List.app"`).
+
+For a dmg that opens without warnings, use a Developer ID Application certificate and notarize:
+
+```sh
+xcrun notarytool store-credentials notary-profile   # one time
+SIGN_IDENTITY="Developer ID Application: Your Name (TEAMID)" \
+NOTARY_PROFILE=notary-profile ./build.sh --dmg
 ```
 
 ## Layout
