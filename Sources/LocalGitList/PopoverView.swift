@@ -46,6 +46,7 @@ struct PopoverView: View {
             Button("Settings", systemImage: "gearshape", action: model.showSettings)
                 .help("Settings")
                 .keyboardShortcut(",", modifiers: .command)
+                .disabled(model.sourceFolder == nil)
         }
         .labelStyle(.iconOnly)
         .buttonStyle(.borderless)
